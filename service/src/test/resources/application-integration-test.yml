@@ -4,7 +4,9 @@
 spring:
   datasource:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    url: jdbc:tc:mysql://localhost/realmeet
+    url: jdbc:tc:mysql:8.0://localhost/realmeet
     username: admin
     password: admin
+  flyway:
+    clean-disabled: false
 

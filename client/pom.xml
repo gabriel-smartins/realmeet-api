@@ -16,18 +16,33 @@
     </properties>
 
     <dependencies>
-        <!-- Test -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Documentation -->
         <dependency>
-            <groupId>io.swagger</groupId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>${swagger-annotations.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
@@ -50,10 +65,18 @@
                             <inputSpec>${openapi-spec.file}</inputSpec>
                             <generatorName>java</generatorName>
                             <library>resttemplate</library>
+
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+
                             <modelPackage>${api.path}.api.model</modelPackage>
                             <apiPackage>${api.path}.api.facade</apiPackage>
+
+                            <invokerPackage>br.com.sw2you.realmeet.api</invokerPackage>
+
                             <configOptions>
                                 <async>true</async>
+                                <useJakartaEe>true</useJakartaEe>
                                 <java8>true</java8>
                                 <serializableModel>true</serializableModel>
                                 <configPackage>${api.path}.api.config</configPackage>

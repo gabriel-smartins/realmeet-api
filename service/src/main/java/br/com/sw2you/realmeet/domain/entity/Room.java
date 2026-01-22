@@ -1,7 +1,7 @@
 package br.com.sw2you.realmeet.domain.entity;
 
 import java.util.Objects;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "room")
