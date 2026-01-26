@@ -1,5 +1,6 @@
 package br.com.sw2you.realmeet.util;
 
+import br.com.sw2you.realmeet.api.model.RoomDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -17,5 +18,9 @@ public final class ResponseEntityUtils {
 
     public static <T> ResponseEntity<T> notFound () {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    public static <T> ResponseEntity<T> noContent (Void aVoid) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
