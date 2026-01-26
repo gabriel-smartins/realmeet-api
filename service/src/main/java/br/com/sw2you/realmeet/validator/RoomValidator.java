@@ -17,29 +17,39 @@ public class RoomValidator {
         this.roomRepository = roomRepository;
     }
 
-
     public void validate(CreateRoomDTO createRoomDTO) {
 
         var validationErrors = new ValidationErrors();
 
-        //Room Name
-        validateRequired(createRoomDTO.getName(), ROOM_NAME, validationErrors);
-        validateMaxLength(createRoomDTO.getName(), ROOM_NAME, ROOM_NAME_MAX_LENGTH, validationErrors);
-
-        //Room Seats
-        validateRequired(createRoomDTO.getSeats(), ROOM_SEATS, validationErrors);
-        validateMinValue(createRoomDTO.getSeats(), ROOM_SEATS, ROOM_SEATS_MIN_VALUE, validationErrors);
-        validateMaxValue(createRoomDTO.getSeats(), ROOM_SEATS, ROOM_SEATS_MAX_VALUE, validationErrors);
+        if (validateName(createRoomDTO.getName(), validationErrors) &&
+                validateSeats(createRoomDTO.getSeats(), validationErrors)) {
+            validateNameDuplicate(createRoomDTO.getName(), validationErrors);
+        }
 
         throwOnError(validationErrors);
 
-        validateNameDuplicate(createRoomDTO.getName());
     }
 
-    public void validateNameDuplicate(String name) {
+    private static boolean validateName(String name, ValidationErrors validationErrors) {
+        return (
+                validateRequired(name, ROOM_NAME, validationErrors) &&
+                        validateMaxLength(name, ROOM_NAME, ROOM_NAME_MAX_LENGTH, validationErrors)
+        );
+
+    }
+
+    private static boolean validateSeats(Integer seats, ValidationErrors validationErrors) {
+        return (
+                validateRequired(seats, ROOM_SEATS, validationErrors) &&
+                        validateMinValue(seats, ROOM_SEATS, ROOM_SEATS_MIN_VALUE, validationErrors) &&
+                        validateMaxValue(seats, ROOM_SEATS, ROOM_SEATS_MAX_VALUE, validationErrors)
+        );
+    }
+
+    public void validateNameDuplicate(String name, ValidationErrors validationErrors) {
         roomRepository.findByNameAndActive(name, true)
-                .ifPresent(__ -> {
-                    throw new InvalidRequestException(new ValidationError(ROOM_NAME, ROOM_NAME + DUPLICATE));
-                });
+                .ifPresent(__ ->
+                        validationErrors.add(ROOM_NAME, ROOM_NAME + DUPLICATE)
+                );
     }
 }
