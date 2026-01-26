@@ -37,8 +37,9 @@ public class RoomService {
         return roomMapper.fromEntityToDTO(room);
     }
 
-    public void deleteRoom(Long id) {
-        getActiveRoomOrThrow(id);
+    public void deleteRoom(Long roomId) {
+        getActiveRoomOrThrow(roomId);
+        roomRepository.deactivate(roomId);
     }
 
     private Room getActiveRoomOrThrow(Long id) {

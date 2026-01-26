@@ -28,10 +28,29 @@ paths:
                 $ref: '#/components/schemas/RoomDTO'
         404:
           description: Resource Not Found
+
+    delete:
+      summary: 'Delete a room by ID'
+      operationId: deleteRoom
+      tags:
+        - room
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the room
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: 'Deleted Successfully'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseError'
+                $ref: '#/components/schemas/RoomDTO'
+        404:
+          description: Resource Not Found
   /rooms:
     post:
       summary: "Creates a room"
@@ -53,7 +72,6 @@ paths:
                 $ref: '#/components/schemas/RoomDTO'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-
 
 components:
   schemas:
