@@ -1,5 +1,6 @@
 package br.com.sw2you.realmeet.unit;
 
+import static br.com.sw2you.realmeet.utils.MapperUtils.roomMapper;
 import static br.com.sw2you.realmeet.utils.TestConstants.DEFAULT_ROOM_ID;
 import static br.com.sw2you.realmeet.utils.TestDataCreator.newRoomBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +11,7 @@ import br.com.sw2you.realmeet.core.BaseUnitTest;
 import br.com.sw2you.realmeet.domain.repository.RoomRepository;
 import br.com.sw2you.realmeet.exception.RoomNotFoundException;
 import br.com.sw2you.realmeet.service.RoomService;
-import br.com.sw2you.realmeet.utils.MapperUtils;
+import br.com.sw2you.realmeet.validator.RoomValidator;
 
 import java.util.Optional;
 
@@ -27,9 +28,12 @@ public class RoomServiceUnitTest extends BaseUnitTest {
     @Mock
     private RoomRepository roomRepository;
 
+    @Mock
+    private RoomValidator roomValidator;
+
     @BeforeEach
     void setupEach() {
-        victim = new RoomService(roomRepository, MapperUtils.roomMapper());
+        victim = new RoomService(roomRepository, roomValidator, roomMapper());
     }
 
     @Test
