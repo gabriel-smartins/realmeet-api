@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room , Long> {
+public interface RoomRepository extends JpaRepository<Room, Long> {
     Optional<Room> findByIdAndActive(Long id, Boolean active);
 
     Optional<Room> findByNameAndActive(String name, Boolean active);
@@ -18,7 +18,7 @@ public interface RoomRepository extends JpaRepository<Room , Long> {
     @Query("UPDATE Room r SET r.active = false WHERE r.id = :roomId")
     void deactivate(@Param("roomId") Long roomId);
 
-    @Modifying(clearAutomatically = true, flushAutomatically = true )
-    @Query("UPDATE Room r SET r.name = :name, r.seats = :seats r.id = :roomId")
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("UPDATE Room r SET r.name = :name, r.seats = :seats WHERE r.id = :roomId")
     void updateRoom(@Param("roomId") Long roomId, @Param("name") String name, @Param("seats") Integer seats);
 }
