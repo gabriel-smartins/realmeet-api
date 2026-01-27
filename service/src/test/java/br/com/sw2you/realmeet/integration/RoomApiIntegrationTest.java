@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import br.com.sw2you.realmeet.api.facade.RoomApi;
+import br.com.sw2you.realmeet.api.model.UpdateRoomDTO;
 import br.com.sw2you.realmeet.core.BaseIntegrationTest;
 import br.com.sw2you.realmeet.domain.repository.RoomRepository;
 
@@ -88,4 +89,28 @@ public class RoomApiIntegrationTest extends BaseIntegrationTest {
         assertThrows(HttpClientErrorException.NotFound.class, () -> api.deleteRoom(1L));
     }
 
+    @Test
+    void testUpdateRoomSuccessfully() {
+        var room = roomRepository.saveAndFlush(newRoomBuilder().build());
+        var updateRoomDTO = new UpdateRoomDTO().name(room.getName() + "_").seats(room.getSeats() + 1);
+
+        api.updateRoom(room.getId(), updateRoomDTO);
+
+        var updatedRoom = roomRepository.findById(room.getId()).orElseThrow();
+        assertEquals(updateRoomDTO.getName(), updatedRoom.getName());
+        assertEquals(updateRoomDTO.getSeats(), updatedRoom.getSeats());
+    }
+
+    @Test
+    void testUpdateRoomDoesNotExists() {
+        assertThrows(HttpClientErrorException.NotFound.class,
+                () -> api.updateRoom(1L, new UpdateRoomDTO().name("Room A").seats(10)));
+    }
+
+    @Test
+    void testUpdateRoomValidationError() {
+        var room = roomRepository.saveAndFlush(newRoomBuilder().build());
+        assertThrows(HttpClientErrorException.UnprocessableEntity.class,
+                () -> api.updateRoom(room.getId(), new UpdateRoomDTO().name(null).seats(10)));
+    }
 }
