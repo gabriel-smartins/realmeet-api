@@ -1,7 +1,7 @@
 package br.com.sw2you.realmeet.exception;
 
-public class RoomNotFoundException extends RuntimeException {
-    public RoomNotFoundException(String message) {
+public class AllocationNotFoundException extends RuntimeException {
+    public AllocationNotFoundException(String message) {
         super(message);
     }
 }
