@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import br.com.sw2you.realmeet.api.facade.AllocationApi;
 import br.com.sw2you.realmeet.core.BaseIntegrationTest;
+import br.com.sw2you.realmeet.domain.repository.AllocationRepository;
 import br.com.sw2you.realmeet.domain.repository.RoomRepository;
+import br.com.sw2you.realmeet.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -19,6 +21,9 @@ public class AllocationApiIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private AllocationRepository allocationRepository;
 
     @Override
     protected void setupEach() throws Exception {
@@ -56,5 +61,32 @@ public class AllocationApiIntegrationTest extends BaseIntegrationTest {
     void testCreateAllocationWhenRoomDoesNotExists() {
         assertThrows(HttpClientErrorException.NotFound.class,
                 () -> api.createAllocation(newCreateAllocationDTO()));
+    }
+
+    @Test
+    void testDeleteAllocationSuccess() {
+        var room = roomRepository.saveAndFlush(newRoomBuilder().build());
+        var allocation = allocationRepository.saveAndFlush(newAllocationBuilder(room).build());
+
+        api.deleteAllocation(allocation.getId());
+
+        assertFalse(allocationRepository.findById(allocation.getId()).isPresent());
+    }
+
+    @Test
+    void testDeleteAllocationInThePast() {
+        var room = roomRepository.saveAndFlush(newRoomBuilder().build());
+        var allocation = allocationRepository
+                .saveAndFlush(newAllocationBuilder(room)
+                        .startAt(DateUtils.now().minusDays(1))
+                        .endAt(DateUtils.now().minusDays(1).minusHours(1))
+                        .build());
+
+        assertThrows(HttpClientErrorException.UnprocessableEntity.class, () -> api.deleteAllocation(allocation.getId()));
+    }
+
+    @Test
+    void testDeleteAllocationDoesNotExists() {
+        assertThrows(HttpClientErrorException.NotFound.class, () -> api.deleteAllocation(1L));
     }
 }
