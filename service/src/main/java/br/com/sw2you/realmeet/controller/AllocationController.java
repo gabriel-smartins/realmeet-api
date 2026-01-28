@@ -1,5 +1,6 @@
 package br.com.sw2you.realmeet.controller;
 
+import static java.util.concurrent.CompletableFuture.runAsync;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 import br.com.sw2you.realmeet.api.facade.AllocationsApi;
@@ -29,5 +30,10 @@ public class AllocationController implements AllocationsApi {
     @Override
     public CompletableFuture<ResponseEntity<AllocationDTO>> createAllocation(@Valid @RequestBody CreateAllocationDTO createAllocationDTO) {
         return supplyAsync(() -> allocationService.createAllocation( createAllocationDTO), controllersExecutor).thenApply(ResponseEntityUtils::created);
+    }
+
+    @Override
+    public CompletableFuture<ResponseEntity<Void>> deleteAllocation(Long id) {
+        return runAsync(() -> allocationService.deleteAllocation(id), controllersExecutor).thenApply(ResponseEntityUtils::noContent);
     }
 }
