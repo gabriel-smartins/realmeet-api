@@ -6,7 +6,9 @@ import br.com.sw2you.realmeet.domain.repository.AllocationRepository;
 import br.com.sw2you.realmeet.domain.repository.RoomRepository;
 import br.com.sw2you.realmeet.exception.RoomNotFoundException;
 import br.com.sw2you.realmeet.mapper.AllocationMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AllocationService {
 
     private final RoomRepository roomRepository;
