@@ -80,7 +80,6 @@ paths:
         422:
           $ref: '#/components/responses/UnprocessableEntity'
 
-  # CORREÇÃO AQUI: /rooms voltou para a margem correta (nível de /rooms/{id})
   /rooms:
     post:
       summary: "Creates a room"
@@ -103,7 +102,6 @@ paths:
         422:
           $ref: '#/components/responses/UnprocessableEntity'
 
-  # CORREÇÃO AQUI: /allocations voltou para a margem correta
   /allocations:
     post:
       summary: "Creates an allocation"
@@ -125,6 +123,8 @@ paths:
                 $ref: '#/components/schemas/AllocationDTO'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
+        404:
+          description: Resource Not Found
 
 components:
   schemas:
