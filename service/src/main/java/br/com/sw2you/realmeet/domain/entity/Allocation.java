@@ -5,6 +5,7 @@ import static java.util.Objects.isNull;
 
 import br.com.sw2you.realmeet.domain.model.Employee;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.*;
@@ -12,6 +13,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "allocation")
 public class Allocation {
+
+    public static final List<String> SORTABLE_FIELDS = List.of("startAt", "endAt");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
