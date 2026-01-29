@@ -18,6 +18,7 @@ public final class ValidatorConstants {
     public static final String ALLOCATION_START_AT = "startAt";
     public static final String ALLOCATION_END_AT = "endAt";
     public static final int ALLOCATION_MAX_DURATION_SECONDS = 4 * 60 * 60;
+    public static final String ALLOCATION_ORDER_BY = "orderBy";
 
     public static final String MISSING = ".missing";
     public static final String EXCEEDS_MAX_LENGTH = ".exceedsMaxLength";
@@ -27,6 +28,7 @@ public final class ValidatorConstants {
     public static final String INCONSISTENT = ".inconsistent";
     public static final String IN_THE_PAST = ".inThePast";
     public static final String EXCEEDS_DURATION = ".exceedsDuration";
+    public static final String INVALID = ".invalid";
 
     private ValidatorConstants() {
     }
