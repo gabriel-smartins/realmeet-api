@@ -8,9 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import br.com.sw2you.realmeet.api.facade.AllocationApi;
 import br.com.sw2you.realmeet.core.BaseIntegrationTest;
+import br.com.sw2you.realmeet.domain.entity.Allocation;
 import br.com.sw2you.realmeet.domain.repository.AllocationRepository;
 import br.com.sw2you.realmeet.domain.repository.RoomRepository;
+import br.com.sw2you.realmeet.service.AllocationService;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.client.HttpClientErrorException;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +31,9 @@ public class AllocationApiFilterIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
     private AllocationRepository allocationRepository;
+
+    @Autowired
+    private AllocationService allocationService;
 
     @Override
     protected void setupEach() throws Exception {
@@ -101,5 +111,60 @@ public class AllocationApiFilterIntegrationTest extends BaseIntegrationTest {
         assertEquals(allocation2.getId(), allocationDTOList.get(1).getId());
     }
 
+    @Test
+    void testFilterAllocationPagination() {
+        persistAllocations(15);
+        ReflectionTestUtils.setField(allocationService, "maxLimit", 10);
 
+        var allocationListPage1 = api.listAllocations(null, null, null, null, null, null, 0);
+        assertEquals(10, allocationListPage1.size());
+
+        var allocationListPage2 = api.listAllocations(null, null, null, null, null, null, 1);
+        assertEquals(5, allocationListPage2.size());
+    }
+
+    @Test
+    void testFilterAllocationPaginationAndLimit() {
+        persistAllocations(25);
+        ReflectionTestUtils.setField(allocationService, "maxLimit", 50);
+
+        var allocationListPage1 = api.listAllocations(null, null, null, null, null, 10, 0);
+        assertEquals(10, allocationListPage1.size());
+
+        var allocationListPage2 = api.listAllocations(null, null, null, null, null, 10, 1);
+        assertEquals(10, allocationListPage2.size());
+
+        var allocationListPage3 = api.listAllocations(null, null, null, null, null, 10, 2);
+        assertEquals(5, allocationListPage3.size());
+    }
+
+    @Test
+    void testFilterAllocationOrderByStartAtDesc() {
+        var allocationsList = persistAllocations(3);
+
+        var allocationsListDTO = api.listAllocations(null, null, null, null, "-startAt", null, null);
+
+        assertEquals(3, allocationsListDTO.size());
+        assertEquals(allocationsList.getFirst().getId(), allocationsListDTO.get(2).getId());
+        assertEquals(allocationsList.get(1).getId(), allocationsListDTO.get(1).getId());
+        assertEquals(allocationsList.get(2).getId(), allocationsListDTO.get(0).getId());
+
+    }
+
+    @Test
+    void testFilterAllocationOrderByInvalidField() {
+        assertThrows(HttpClientErrorException.UnprocessableEntity.class, () ->  api.listAllocations(null, null, null, null, "invalid", null, null));
+    }
+
+    private List<Allocation> persistAllocations(int numberOfAllocations) {
+        var room = roomRepository.saveAndFlush(newRoomBuilder().build());
+        return IntStream
+                .range(0, numberOfAllocations)
+                .mapToObj(i -> allocationRepository.saveAndFlush(newAllocationBuilder(room)
+                        .subject(DEFAULT_ALLOCATION_SUBJECT + "_" + (i + 1))
+                        .startAt(DEFAULT_ALLOCATION_START_AT.plusHours(i + 1))
+                        .endAt(DEFAULT_ALLOCATION_END_AT.plusHours(i + 1))
+                        .build())
+                ).collect(Collectors.toList());
+    }
 }

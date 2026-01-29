@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import br.com.sw2you.realmeet.core.BaseUnitTest;
-import br.com.sw2you.realmeet.domain.entity.Allocation;
 import br.com.sw2you.realmeet.exception.InvalidOrderByFilterException;
 
 import java.util.Collections;

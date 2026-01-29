@@ -21,7 +21,6 @@ public interface AllocationRepository extends JpaRepository<Allocation, Long> {
             @Param("endAt") OffsetDateTime endAt
     );
 
-    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("SELECT a from Allocation a WHERE (:employeeEmail IS NULL OR a.employee.email = :employeeEmail) AND " +
             "(:roomId IS NULL OR a.room.id = :roomId) AND " +
             "(:startAt IS NULL OR a.startAt >= :startAt) AND " +
