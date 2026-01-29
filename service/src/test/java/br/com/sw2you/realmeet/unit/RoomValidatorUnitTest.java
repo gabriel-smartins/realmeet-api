@@ -55,7 +55,6 @@ public class RoomValidatorUnitTest extends BaseUnitTest {
         assertEquals(new ValidationError(ROOM_NAME, ROOM_NAME + EXCEEDS_MAX_LENGTH), exception.getValidationErrors().getError(0));
     }
 
-
     @Test
     void testValidateWhenSeatsIsMissing() {
         var exception = assertThrows(InvalidRequestException.class, () -> victim.validate(newCreateRoomDTO().seats(null)));
