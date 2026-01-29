@@ -59,7 +59,7 @@ public class AllocationService {
                 pageable
         );
 
-       return allocations.stream().map(allocationMapper::fromEntityToAllocationDTO).collect(toList());
+        return allocations.stream().map(allocationMapper::fromEntityToAllocationDTO).collect(toList());
     }
 
     public AllocationDTO createAllocation(CreateAllocationDTO createAllocationDTO) {
@@ -90,7 +90,7 @@ public class AllocationService {
             throw new AllocationCannotBeUpdatedException();
         }
 
-        allocationValidator.validate(allocationId, updateAllocationDTO);
+        allocationValidator.validate(allocationId, allocation.getRoom().getId(), updateAllocationDTO);
 
         allocationRepository.updateAllocation(allocationId, updateAllocationDTO.getSubject(), updateAllocationDTO.getStartAt(), updateAllocationDTO.getEndAt());
     }
