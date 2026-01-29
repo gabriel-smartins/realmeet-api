@@ -104,8 +104,7 @@ public class AllocationValidator {
                 null,
                 roomId,
                 now(),
-                null,
-                PageRequest.of(0, Integer.MAX_VALUE, Sort.unsorted())
+                endAt
         );
 
         allocationList.stream().filter(a -> isOverlapping(startAt, endAt, a.getStartAt(), a.getEndAt()))
