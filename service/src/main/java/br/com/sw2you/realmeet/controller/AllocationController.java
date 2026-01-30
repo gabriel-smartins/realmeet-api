@@ -25,7 +25,7 @@ public class AllocationController implements AllocationsApi {
     private final Executor controllersExecutor;
     private final AllocationService allocationService;
 
-    public AllocationController(Executor controllersExecutor, AllocationService allocationService, String apiKey) {
+    public AllocationController(Executor controllersExecutor, AllocationService allocationService) {
         this.controllersExecutor = controllersExecutor;
         this.allocationService = allocationService;
     }
