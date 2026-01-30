@@ -25,13 +25,14 @@ public class AllocationController implements AllocationsApi {
     private final Executor controllersExecutor;
     private final AllocationService allocationService;
 
-    public AllocationController(Executor controllersExecutor, AllocationService allocationService) {
+    public AllocationController(Executor controllersExecutor, AllocationService allocationService, String apiKey) {
         this.controllersExecutor = controllersExecutor;
         this.allocationService = allocationService;
     }
 
     @Override
-    public CompletableFuture<ResponseEntity<List<AllocationDTO>>> listAllocations(String employeeEmail,
+    public CompletableFuture<ResponseEntity<List<AllocationDTO>>> listAllocations(String apiKey,
+                                                                                  String employeeEmail,
                                                                                   Long roomId,
                                                                                   LocalDate startAt,
                                                                                   LocalDate endAt,
@@ -42,17 +43,19 @@ public class AllocationController implements AllocationsApi {
     }
 
     @Override
-    public CompletableFuture<ResponseEntity<AllocationDTO>> createAllocation(@Valid @RequestBody CreateAllocationDTO createAllocationDTO) {
+    public CompletableFuture<ResponseEntity<AllocationDTO>> createAllocation(String apiKey, @Valid @RequestBody CreateAllocationDTO createAllocationDTO) {
         return supplyAsync(() -> allocationService.createAllocation(createAllocationDTO), controllersExecutor).thenApply(ResponseEntityUtils::created);
     }
 
     @Override
-    public CompletableFuture<ResponseEntity<Void>> deleteAllocation(Long id) {
+    public CompletableFuture<ResponseEntity<Void>> deleteAllocation(String apiKey, Long id) {
         return runAsync(() -> allocationService.deleteAllocation(id), controllersExecutor).thenApply(ResponseEntityUtils::noContent);
     }
 
     @Override
-    public CompletableFuture<ResponseEntity<Void>> updateAllocation(Long id, UpdateAllocationDTO updateAllocationDTO) {
+    public CompletableFuture<ResponseEntity<Void>> updateAllocation(String apiKey, Long id, UpdateAllocationDTO updateAllocationDTO) {
         return runAsync(() -> allocationService.updateAllocation(id, updateAllocationDTO), controllersExecutor).thenApply(ResponseEntityUtils::noContent);
     }
+
+
 }
