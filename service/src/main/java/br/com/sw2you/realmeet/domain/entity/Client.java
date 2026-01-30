@@ -1,0 +1,95 @@
+package br.com.sw2you.realmeet.domain.entity;
+
+import java.util.Objects;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class Client {
+    @Id
+    @Column(name = "api_key")
+    private String apiKey;
+
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "active", nullable = false)
+    private boolean active;
+
+    public Client() {
+    }
+
+    private Client(Builder builder) {
+        this.apiKey = builder.apiKey;
+        this.description = builder.description;
+        this.active = builder.active;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return active == client.active && Objects.equals(apiKey, client.apiKey) && Objects.equals(description, client.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(apiKey, description, active);
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "apiKey='" + apiKey + '\'' +
+                ", description='" + description + '\'' +
+                ", active=" + active +
+                '}';
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+
+    public static final class Builder {
+        private String apiKey;
+        private String description;
+        private boolean active;
+
+        private Builder() {
+        }
+
+        public Builder apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder active(boolean active) {
+            this.active = active;
+            return this;
+        }
+
+        public Client build() {
+            return new Client(this);
+        }
+    }
+}
