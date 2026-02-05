@@ -5,4 +5,5 @@ public final class Constants {
     private Constants(){}
 
     public static final String ALLOCATION_MAX_FILTER_LIMIT = "${realmeet.allocations.maxFilterLimit:50}";
+    public static final String ALLOCATION = "allocation";
 }
