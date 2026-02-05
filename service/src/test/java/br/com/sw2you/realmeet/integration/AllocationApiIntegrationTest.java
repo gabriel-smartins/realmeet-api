@@ -10,8 +10,10 @@ import br.com.sw2you.realmeet.api.model.UpdateAllocationDTO;
 import br.com.sw2you.realmeet.core.BaseIntegrationTest;
 import br.com.sw2you.realmeet.domain.repository.AllocationRepository;
 import br.com.sw2you.realmeet.domain.repository.RoomRepository;
+import br.com.sw2you.realmeet.email.EmailSender;
 import br.com.sw2you.realmeet.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.web.client.HttpClientErrorException;
 
 import org.junit.jupiter.api.Test;
@@ -26,6 +28,9 @@ public class AllocationApiIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
     private AllocationRepository allocationRepository;
+
+    @MockitoBean
+    private EmailSender emailSender;
 
     @Override
     protected void setupEach() throws Exception {
