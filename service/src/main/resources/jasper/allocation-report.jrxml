@@ -1,0 +1,61 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="allocation-report" language="java" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a0bb6383-e6a2-4a28-9648-e74885a08f8a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="DateFromFilter" class="java.lang.String"/>
+	<parameter name="DateToFilter" class="java.lang.String"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="DateFrom" class="java.lang.String"/>
+	<field name="DateTo" class="java.lang.String"/>
+	<field name="RoomName" class="java.lang.String"/>
+	<field name="EmployeeName" class="java.lang.String"/>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="textField" uuid="673baa21-9c36-4215-a360-71e55322fe3b" positionType="FixRelativeToBottom" x="0" y="0" width="555" height="79" fontSize="20.0" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[Relatório de Agendamento de Salas]]></expression>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+		</element>
+		<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+	</title>
+	<columnHeader height="93" splitType="Stretch">
+		<element kind="frame" uuid="932076a5-88fd-4920-b61c-dfac329b09ba" x="10" y="0" width="40" height="20">
+			<element kind="textField" uuid="d3b305ec-2845-4fb9-a09d-a19630fc27f2" x="0" y="10" width="40" height="20">
+				<expression><![CDATA[Período:]]></expression>
+			</element>
+		</element>
+		<element kind="textField" uuid="42abe9f0-cd37-476d-91d4-06a16fe54223" x="70" y="10" width="40" height="20" linkType="None" linkTarget="Self">
+			<expression><![CDATA[$P{DateFromFilter}	]]></expression>
+		</element>
+		<element kind="textField" uuid="75ca3cb8-cede-4d4a-ada8-b53cba68b5a2" x="130" y="10" width="40" height="20">
+			<expression><![CDATA[$P(DateToFilter)]]></expression>
+		</element>
+		<element kind="textField" uuid="50b24393-b16d-493b-8278-17c97b75cc60" positionType="FixRelativeToBottom" x="0" y="67" width="60" height="20" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[Início]]></expression>
+		</element>
+		<element kind="textField" uuid="91c71f62-fcbd-431f-ad01-d7959f8b8e2e" positionType="FixRelativeToBottom" x="80" y="67" width="60" height="20" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[Fim]]></expression>
+		</element>
+		<element kind="textField" uuid="d0226a03-8bcd-401a-83c3-fec05d15db6a" x="160" y="67" width="60" height="20" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[Sala]]></expression>
+		</element>
+		<element kind="textField" uuid="f8743187-e49c-4003-8de2-089958242a6c" x="400" y="72" width="70" height="20" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[Responsável]]></expression>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<element kind="textField" uuid="e70b9a54-6d1d-4e64-916f-7ce3a4106470" x="0" y="0" width="60" height="18" hTextAlign="Center">
+				<expression><![CDATA[$F{DateFrom}]]></expression>
+			</element>
+			<element kind="textField" uuid="52f2d2be-6c40-48e2-a0cd-ba95ee9b6ddd" x="80" y="-1" width="60" height="20" hTextAlign="Center">
+				<expression><![CDATA[$F{DateTo}]]></expression>
+			</element>
+			<element kind="textField" uuid="9fb76368-40e3-4d43-9e2c-ac83401915eb" x="160" y="-1" width="60" height="20" hTextAlign="Center">
+				<expression><![CDATA[$F{RoomName}]]></expression>
+			</element>
+			<element kind="textField" uuid="8ac88ec4-02bd-4a2c-aa4e-8c1c00f361bf" x="405" y="0" width="60" height="20" hTextAlign="Center">
+				<expression><![CDATA[$F{EmployeeName}]]></expression>
+			</element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+</jasperReport>
