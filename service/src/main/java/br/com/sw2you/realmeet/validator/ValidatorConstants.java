@@ -20,6 +20,10 @@ public final class ValidatorConstants {
     public static final int ALLOCATION_MAX_DURATION_SECONDS = 4 * 60 * 60;
     public static final String ALLOCATION_ORDER_BY = "orderBy";
 
+    public static final String DATE_FROM = "dateFrom";
+    public static final String DATE_TO = "dateTo";
+    public static final String EMAIL = "email";
+
     public static final String MISSING = ".missing";
     public static final String EXCEEDS_MAX_LENGTH = ".exceedsMaxLength";
     public static final String EXCEEDS_MAX_VALUE = ".exceedsMaxValue";
@@ -28,6 +32,7 @@ public final class ValidatorConstants {
     public static final String INCONSISTENT = ".inconsistent";
     public static final String IN_THE_PAST = ".inThePast";
     public static final String EXCEEDS_DURATION = ".exceedsDuration";
+    public static final String EXCEEDS_INTERVAL = ".exceedsInterval";
     public static final String OVERLAPS = ".overlaps";
     public static final String INVALID = ".invalid";
 

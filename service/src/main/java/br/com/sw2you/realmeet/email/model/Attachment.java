@@ -47,7 +47,7 @@ public class Attachment {
                 '}';
     }
 
-    public static Builder mewBuilder() {
+    public static Builder newBuilder() {
         return new Builder();
     }
 
