@@ -47,8 +47,7 @@ Este projeto foi construído seguindo as melhores práticas de mercado e Clean C
 * **JasperReports** (Engine de relatórios)
 
 **Banco de Dados:**
-* **PostgreSQL** (Produção)
-* **H2 Database** (Testes em memória)
+* **MySql** (Produção)
 * **Flyway** (Opcional - Versionamento de banco)
 
 **Ferramentas:**
