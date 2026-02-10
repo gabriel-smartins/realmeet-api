@@ -9,4 +9,5 @@ spring:
     password: admin
   flyway:
     clean-disabled: false
-
+  main:
+    allow-bean-definition-overriding: true
