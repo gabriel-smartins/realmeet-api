@@ -52,8 +52,6 @@ Este projeto foi construído seguindo as melhores práticas de mercado e Clean C
 * **Flyway** (Opcional - Versionamento de banco)
 
 **Ferramentas:**
-* **Lombok** (Redução de boilerplate)
-* **Swagger / OpenAPI** (Documentação viva da API)
 * **Docker** (Containerização do ambiente)
 
 ---
