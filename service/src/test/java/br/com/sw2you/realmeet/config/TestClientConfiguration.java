@@ -2,6 +2,7 @@ package br.com.sw2you.realmeet.config;
 
 import br.com.sw2you.realmeet.api.ApiClient;
 import br.com.sw2you.realmeet.api.facade.AllocationApi;
+import br.com.sw2you.realmeet.api.facade.ReportApi;
 import br.com.sw2you.realmeet.api.facade.RoomApi;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -22,5 +23,10 @@ public class TestClientConfiguration {
     @Bean
     public AllocationApi allocationApi(ApiClient apiClient) {
         return new AllocationApi(apiClient);
+    }
+
+    @Bean
+    public ReportApi reportApi() {
+        return new ReportApi(apiClient());
     }
 }
